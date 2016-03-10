@@ -1,0 +1,21 @@
+.ui.cards > .card, .ui.card { 
+  width: auto;
+}
+
+.ui.selection.dropdown {
+  min-width: 9em;
+}
+
+.centered #new_post.ui.form label {
+  text-align: left;
+}
+
+.owl-carousel .item{
+  margin: 3px;
+}
+
+.owl-carousel .item img{
+  display: block;
+  width: 100%;
+  height: auto;
+}

@@ -1,0 +1,75 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular home icon"></i>
+  All your places.
+</h2>
+<p id="notice"><%= notice %></p>
+<div class="ui grid">
+  <div class="right aligned eight wide column">
+      <a class="ui basic button" href="<%= new_post_path %>">
+        <i class="icon add"></i>
+        Post your place
+      </a>
+  </div>
+  <div class="left aligned eight wide column">
+    <button class="ui basic button">
+      <i class="icon search"></i>
+      Search a place
+    </button>
+  </div>
+</div>
+<div class="ui three column grid">
+  <% @posts.each do |post| %>
+    <div class="column">
+      <div class="ui card">
+        <div class="content">
+          <div class="right floated meta"><%= post.updated_at.strftime("%Y/%m/%d %R") %></div>
+          <%= image_tag "male.png", class: "ui avatar image" %>Elliot
+        </div>
+        <div class="image owl-carousel">
+          <% for i in 105..110 do %>
+            <div class="item"><%= image_tag "https://s3.amazonaws.com/zukerimage/uploads/attachment/image/#{i}/original.jpg" %></div>
+          <% end %>
+        </div>
+        <div class="content">
+          <div class="header"><%= post.price %></div>
+          <div class="description">
+            <%= post.description %>
+          </div>
+        </div>
+        <div class="content">
+          <span class="right floated">
+            <i class="heart outline like icon"></i>
+            17 likes
+          </span>
+          <i class="comment icon"></i>
+          3 comments
+        </div>
+        <div class="extra content">
+          <div class="ui large transparent left icon input">
+            <i class="heart outline icon"></i>
+            <input type="text" placeholder="Add Comment...">
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= stylesheet_link_tag    'owl-carousel/owl.carousel.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag    'owl-carousel/owl.theme.css', media: 'all', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'owl-carousel/owl.carousel.js', 'data-turbolinks-track' => true %>
+
+<%= content_for :custom_js do %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".owl-carousel").owlCarousel({
+        //autoPlay: 3000, //Set AutoPlay to 3 seconds
+        items : 3,
+        // itemsDesktop : [1199,3],
+        // itemsDesktopSmall : [979,3]
+        lazyLoad : true,
+        navigation : true
+    });
+  });
+</script>
+<% end %>

@@ -1,0 +1,60 @@
+<%= form_for @post, html: { class: 'ui form' } do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="ui two column centered grid">
+    <div class="four column centered row">
+      <div class="column">
+        <div class="fields">
+          <div class="field">
+            <%= f.label :price %>
+            <%= f.text_field :price %>
+          </div>
+          <div class="field">
+            <%= f.label :post_type %>
+            <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui selection dropdown" %>
+          </div>
+        </div>
+        <div class="field">
+          <%= f.label :description, 'Tips' %>
+          <%= f.text_area :description %>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <%= f.label :address %>
+          <%= f.text_field :address %>
+          <div class="ui embed" data-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.3228017997767!2d121.53782731486504!3d25.0570459839616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDAzJzI1LjQiTiAxMjHCsDMyJzI0LjEiRQ!5e0!3m2!1szh-TW!2stw!4v1457601553949"></div>
+        </div>
+      </div>
+    </div>
+    <div class="column" style="margin: auto; text-align: center;">
+      <%= f.submit "Continue", class: "ui button basic black" %>
+    </div>
+  </div>
+<% end %>
+<%= content_for :custom_js do %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.ui.form')
+      .form({
+        on: 'submit',
+        fields: {
+          post_price     : ['empty','integer'],
+          post_post_type   : 'empty',
+          post_description : 'empty',
+          post_address : 'empty'
+        }
+      })
+    ;
+  })
+</script>
+<% end %>

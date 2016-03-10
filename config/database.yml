@@ -1,0 +1,16 @@
+default: &default
+  timeout: 5000
+  adapter: postgresql
+  encoding: utf8
+  database: super_post_development
+  pool: 5
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: super_post_test
+
+production:
+  <<: *default

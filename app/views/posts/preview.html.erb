@@ -1,47 +1,27 @@
 <h2 class="ui center aligned icon header">
-  <i class="circular home icon"></i>
+  <!-- <i class="circular home icon"></i> -->
   Check before you submit.
 </h2>
-<div class="ui card">
-  <div class="content">
-    <div class="right floated meta">14h</div>
-    <%= image_tag "male.png", class: "ui avatar image" %>Elliot
+<div class="ui stackable three column grid centered">
+  <div class="column">
+    <%= render @post %>
   </div>
-  <div class="image owl-carousel">
-    <% for i in 105..110 do %>
-      <div class="item"><%= image_tag "https://s3.amazonaws.com/zukerimage/uploads/attachment/image/#{i}/original.jpg" %></div>
-    <% end %>
-  </div>
-  <div class="content">
-    <div class="description">
-      <p>只些婦女們，值得說什麼爭麵皮！再鬧一回亦好。盲目地前進！因為所規定的過年，那三種曆法，沒有年歲，觸進人們的肌膚，一個有年紀的人，地方領導人。我要頂禮他啊！甘失掉了麵皮！</p>
-    </div>
-  </div>
-  <div class="content">
-    <span class="right floated">
-      <i class="heart outline like icon"></i>
-      17 likes
-    </span>
-    <i class="comment icon"></i>
-    3 comments
-  </div>
-  <div class="extra content">
-    <div class="ui large transparent left icon input">
-      <i class="heart outline icon"></i>
-      <input type="text" placeholder="Add Comment...">
-    </div>
-  </div>
+</div>
+
+<div class="center">
+  <%= button_to "完成刊登", publish_post_path(post_id: @post.id), class: "ui basic black large button center submit-buttom" %>
+  <%= link_to "回去編輯", edit_post_path(@post), class: "ui large center submit-buttom" %>
 </div>
 
 <%= content_for :custom_js do %>
 <script type="text/javascript">
   $(".owl-carousel").owlCarousel({
       //autoPlay: 3000, //Set AutoPlay to 3 seconds
-      items : 3,
+      singleItem: true,
       // itemsDesktop : [1199,3],
       // itemsDesktopSmall : [979,3]
       lazyLoad : true,
-      navigation : true
+      navigation : false
   });
 </script>
 <% end %>

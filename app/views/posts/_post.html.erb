@@ -1,0 +1,41 @@
+<div class="ui card">
+  <div class="content">
+    <div class="right floated meta"><%= time_since(post.updated_at) %></div>
+    <div class="header"><%= post.address %></div>
+  </div>
+  <div class="img-price-container">
+    <div class="image owl-carousel">
+      <% if post.attachments_count.present? %>
+        <% post.attachments.each do |a| %>
+          <div class="item"><%= image_tag a.image.large.url %></div>
+        <% end %>
+      <% else %>
+        <% for i in 1..5 do %>
+          <div class="item"><%= image_tag "https://unsplash.it/560/?random" %></div>
+        <% end %>
+      <% end %>
+    </div>
+    <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) %></span>
+  </div>
+  <div class="content">
+    <%= image_tag "male.png", class: "ui avatar image" %><%= post.author %>
+    <div class="right floated meta"><%= "#{post.attachments_count.to_i} 張圖片" %></div>
+    <div class="description">
+      <%= post.description %>
+    </div>
+  </div>
+  <!-- <div class="content">
+    <span class="right floated">
+      <i class="heart outline like icon"></i>
+      17 likes
+    </span>
+    <i class="comment icon"></i>
+    3 comments
+  </div>
+  <div class="extra content">
+    <div class="ui large transparent left icon input">
+      <i class="heart outline icon"></i>
+      <input type="text" placeholder="Add Comment...">
+    </div>
+  </div> -->
+</div>

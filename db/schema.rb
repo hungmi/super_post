@@ -11,20 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310042958) do
+ActiveRecord::Schema.define(version: 20160310125440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.string   "image"
+    t.text     "description"
+    t.integer  "order"
+    t.string   "theta_url"
+    t.integer  "room_id"
+    t.boolean  "cover",          default: false
+    t.string   "token"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "attachments", ["imageable_type", "imageable_id"], name: "index_attachments_on_imageable_type_and_imageable_id", using: :btree
+
   create_table "posts", force: :cascade do |t|
     t.string   "address"
-    t.decimal  "price"
+    t.integer  "price"
     t.text     "description"
-    t.integer  "post_type"
-    t.integer  "user_id"
-    t.integer  "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "state",             default: 0
+    t.integer  "availability",      default: 0
+    t.integer  "post_type",         default: 0
+    t.string   "author"
+    t.string   "contact"
+    t.string   "token"
+    t.integer  "attachments_count"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
 end

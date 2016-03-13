@@ -26,6 +26,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pg'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 gem 'zh-lorem', '~> 1.0'
+gem 'mini_magick'
+gem 'fog-aws', '<= 0.1.1'
+gem 'carrierwave', github:'carrierwaveuploader/carrierwave'
+gem 'figaro'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

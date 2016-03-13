@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :posts do
     member do
       get "upload_photo"
+      post "update_attachment"
+      get "preview"
+      post "publish"
     end
   end
 

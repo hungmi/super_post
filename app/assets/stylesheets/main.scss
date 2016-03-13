@@ -1,3 +1,44 @@
+body.snow {
+  background-color: whitesmoke !important;
+}
+
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+  .ui.container > .ui.stackable.grid > .column.col-md-2 {
+    width: 50% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+.ui.card {
+  border: 1px solid #DDD;
+  box-shadow: none;
+  // &.renting {
+  //   background-color: honeydew !important;
+  // }
+  // &.replacement {
+  //   background-color: azure !important;
+  // }
+  // &.matching {
+  //   background-color: lavenderblush !important;
+  // }
+}
+
+.price-tag {
+  font-size: 20px;
+  padding: 15px;
+  background-color: rgba(50,50,50,0.5);
+  color: white;
+}
+
+.img-price-container {
+  position: relative;
+  .price-tag {
+    position: absolute;
+    top: 70%;
+  }
+}
+
 .ui.cards > .card, .ui.card { 
   width: auto;
 }
@@ -6,16 +47,58 @@
   min-width: 9em;
 }
 
-.centered #new_post.ui.form label {
-  text-align: left;
+#new_post.ui.form {
+  width: 400px;
+  margin: auto;
 }
 
-.owl-carousel .item{
-  margin: 3px;
+.centered #new_post.ui.form label {
+  text-align: left;
 }
 
 .owl-carousel .item img{
   display: block;
   width: 100%;
   height: auto;
+}
+
+.center {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.ui.button.submit-buttom {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#upload_zone {
+  cursor: pointer;
+  max-width: 300px;
+  margin: auto;
+}
+
+#photoPreviewBlock {
+  margin: 1rem 0px;
+}
+
+#images, #photoPreviewBlock {
+  img {
+    padding: 0px;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    max-width: 100%;
+  }
+  div.desc {
+    padding: 0px;
+    text-align: center;
+    textarea {
+      width: 100%;
+    }
+  }
 }

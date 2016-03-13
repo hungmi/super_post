@@ -1,9 +1,70 @@
 <h2 class="ui center aligned icon header">
-  <i class="circular home icon"></i>
+  <!-- <i class="circular home icon"></i> -->
   How does your place look ?
 </h2>
-<div class="ui two column centered grid">
-  <div class="column">
-  <h3 class="ui center aligned segment">拖曳 或 選擇圖片</h3>
-  </div>
+
+<div class="center">
+  <h3 class="ui center aligned segment" id="upload_zone">輕按選擇圖片</h3>
+  <div class="ui stackable four column grid" id="photoPreviewBlock"></div>
+  <button class="ui basic large button hidden submit-buttom" id="upload_button">確定上傳</button>
 </div>
+
+<% if @post.attachments_count.present? && @post.attachments_count > 0 %>
+  <div id="images" class="ui stackable grid container">
+  <% @post.attachments.each_with_index do |a,i| %>
+    <div class="four wide column" style="text-align: center;">
+      <%= image_tag a.image.medium.url, class: 'center' %>
+      <!-- <div class="desc"><%#= text_area_tag 'description', a.description %></div> -->
+    </div>
+  <% end %>
+  </div>
+  <div class="center">
+    <%= link_to "上傳完了！", preview_post_path(post_id: @post.id), class: "ui basic large button submit-buttom" %>
+  </div>
+<% end %>
+
+<div class="hidden">
+  <%= form_tag update_attachment_post_path(post_id: @post.id), multipart: true, id: "upload_form" do %>
+    <%= file_field_tag "file[]", multiple: true %>
+    <%= semantic_icon('remove deletePhoto') %>
+    <%= submit_tag %>
+  <% end %>
+</div>
+
+<%= content_for :custom_js do %>
+  <script type="text/javascript">
+    $("#upload_zone").click(function(){
+      $('input[type="file"][name="file[]"]').click();
+    });
+    $("#upload_button").click(function(){
+      $('#upload_form').submit();
+    });
+    $('input[type="file"][name="file[]"]').change(function(){
+      $('#photoPreviewBlock').html('');
+      var files = $(this).prop('files')
+      for (var i=0; i<files.length; i++) { readURL(files[i]); }
+      $('#upload_button').removeClass('hidden');
+      $('#upload_zone').css('color','#aaa');
+      $('#upload_zone').html('重新選擇圖片');
+    });
+    function readURL(file) {
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            //$('.photoPreview').css('background', 'url(' + e.target.result + ')');
+            var img = $('<div>', {
+              html: $('<img />', { 
+              class: 'photoPreview ui image center',
+                src: e.target.result,
+              }),
+              class: 'column'
+            });
+            img.appendTo($('#photoPreviewBlock'));
+            $('.photoUpload, #uploadClick').hide();
+        }
+        $('.deletePhoto').show();
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+<% end %>

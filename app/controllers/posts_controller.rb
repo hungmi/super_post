@@ -41,8 +41,26 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
   end
 
+  def update_attachment
+    @post = Post.find_by_id(params[:id])
+    #name  = params[:file]
+    #style = params[:attachment_style]
+    #image = params[:user][name]
+    if params[:file]
+      params[:file].each { |picture| @post.attachments.create(:image => picture) }
+    end
+    #render(json: current_user.to_fileupload(name, style), content_type: request.format)
+    redirect_to upload_photo_post_path
+  end
+
   def preview
     @post = Post.find_by_id(params[:post_id])
+  end
+
+  def publish
+    @post = Post.find_by_id(params[:post_id])
+    @post.publish!
+    redirect_to posts_path, notice: "成功刊登！"
   end
 
   # PATCH/PUT /posts/1
@@ -50,7 +68,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to upload_photo_post_path(@post), notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }

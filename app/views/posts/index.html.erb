@@ -1,56 +1,33 @@
 <h2 class="ui center aligned icon header">
   <i class="circular home icon"></i>
-  All your places.
+  Housing is easy.
 </h2>
-<p id="notice"><%= notice %></p>
 <div class="ui grid">
   <div class="right aligned eight wide column">
       <a class="ui basic button" href="<%= new_post_path %>">
         <i class="icon add"></i>
-        Post your place
+        Post
       </a>
   </div>
   <div class="left aligned eight wide column">
     <button class="ui basic button">
       <i class="icon search"></i>
-      Search a place
+      Search
     </button>
   </div>
 </div>
-<div class="ui three column grid">
-  <% @posts.each do |post| %>
-    <div class="column">
-      <div class="ui card">
-        <div class="content">
-          <div class="right floated meta"><%= post.updated_at.strftime("%Y/%m/%d %R") %></div>
-          <%= image_tag "male.png", class: "ui avatar image" %>Elliot
-        </div>
-        <div class="image owl-carousel">
-          <% for i in 105..110 do %>
-            <div class="item"><%= image_tag "https://s3.amazonaws.com/zukerimage/uploads/attachment/image/#{i}/original.jpg" %></div>
-          <% end %>
-        </div>
-        <div class="content">
-          <div class="header"><%= post.price %></div>
-          <div class="description">
-            <%= post.description %>
-          </div>
-        </div>
-        <div class="content">
-          <span class="right floated">
-            <i class="heart outline like icon"></i>
-            17 likes
-          </span>
-          <i class="comment icon"></i>
-          3 comments
-        </div>
-        <div class="extra content">
-          <div class="ui large transparent left icon input">
-            <i class="heart outline icon"></i>
-            <input type="text" placeholder="Add Comment...">
-          </div>
-        </div>
-      </div>
+
+<% if false#flash.any? %>
+  <div class="ui success message">
+    <i class="close icon"></i>
+    <div class="header"><%= notice %></div>
+  </div>
+<% end %>
+
+<div class="ui stackable three column grid">
+  <% @posts.publish.each do |post| %>
+    <div class="column col-md-2">
+      <%= render post %>
     </div>
   <% end %>
 </div>
@@ -64,11 +41,10 @@
   $(document).ready(function() {
     $(".owl-carousel").owlCarousel({
         //autoPlay: 3000, //Set AutoPlay to 3 seconds
-        items : 3,
-        // itemsDesktop : [1199,3],
-        // itemsDesktopSmall : [979,3]
+        singleItem: true,
         lazyLoad : true,
-        navigation : true
+        navigation : false,
+        pagination : false,
     });
   });
 </script>

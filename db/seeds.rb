@@ -8,6 +8,6 @@
 include ZhLorem::Helpers
 i = 1
 for i in 1..13 do
-  Post.create(address: ZhLorem.sentence, price: rand(4323..18989), description: zh_lorem_paragraphs(1), post_type: rand(0..2), status: rand(0..1))
+  Post.create(author: zh_lorem_name, contact: rand(1234567890..9999999999), address: zh_lorem_words(rand(15..20)), price: rand(43..189)*100, description: zh_lorem_paragraphs(1), post_type: rand(0..2), state: rand(0..1))
   i = i + 1
 end

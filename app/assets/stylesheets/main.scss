@@ -2,26 +2,13 @@ body.snow {
   background-color: whitesmoke !important;
 }
 
-@media only screen and (min-width: 600px) and (max-width: 991px) {
-  .ui.container > .ui.stackable.grid > .column.col-md-2 {
-    width: 50% !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-}
-
 .ui.card {
   border: 1px solid #DDD;
   box-shadow: none;
-  // &.renting {
-  //   background-color: honeydew !important;
-  // }
-  // &.replacement {
-  //   background-color: azure !important;
-  // }
-  // &.matching {
-  //   background-color: lavenderblush !important;
-  // }
+  width: auto;
+  .header.address {
+    min-height: 46px;
+  }
 }
 
 .price-tag {
@@ -37,10 +24,6 @@ body.snow {
     position: absolute;
     top: 70%;
   }
-}
-
-.ui.cards > .card, .ui.card { 
-  width: auto;
 }
 
 .ui.selection.dropdown {

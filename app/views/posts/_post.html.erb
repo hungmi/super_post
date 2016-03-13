@@ -1,4 +1,4 @@
-<div class="ui card">
+<div class="ui card post">
   <div class="content">
     <div class="right floated meta"><%= time_since(post.updated_at) %></div>
     <div class="header address"><%= post.address %></div>
@@ -21,7 +21,7 @@
     <%= image_tag "male.png", class: "ui avatar image" %><%= post.author %>
     <div class="right floated meta"><%= "#{post.attachments_count.to_i} 張圖片" %></div>
     <div class="description">
-      <%= post.description %>
+      <%= simple_format post.description %>
     </div>
   </div>
   <!-- <div class="content">

@@ -2,10 +2,37 @@ body.snow {
   background-color: whitesmoke !important;
 }
 
-.ui.card {
+.main.container {
+  // 這三行主要是為了清除 body 底下的多餘空白
+  top: 5em;
+  position: relative;
+  margin-top: 0px !important;
+
+  max-width: 723px !important;
+}
+
+#action_wrapper {
+  max-width: 500px;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+#post_search {
+  i.icon.search {
+    cursor: pointer;
+  }
+}
+
+#new_post_button {
+  width: 100%;
+}
+
+.ui.card.post {
   border: 1px solid #DDD;
   box-shadow: none;
   width: auto;
+  max-width: 800px;
+  margin: 0 auto;
   .header.address {
     min-height: 46px;
   }
@@ -26,8 +53,26 @@ body.snow {
   }
 }
 
-.ui.selection.dropdown {
-  min-width: 9em;
+.ios_dropdown_with_icon {
+  position: relative;
+  .ui.dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-left: 14px;
+  }
+  .dropdown.icon {
+    position: absolute;
+    top: 26%;
+    right: 5%;
+  }
+}
+
+input[type="search"] {
+  // for Safari, Firefox input rounding
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 #new_post.ui.form {
@@ -46,9 +91,9 @@ body.snow {
 }
 
 .center {
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  text-align: center !important;
 }
 
 .ui.button.submit-buttom {

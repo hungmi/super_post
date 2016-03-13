@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160310125440) do
   add_index "attachments", ["imageable_type", "imageable_id"], name: "index_attachments_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
+    t.string   "city"
     t.string   "address"
     t.integer  "price"
     t.text     "description"

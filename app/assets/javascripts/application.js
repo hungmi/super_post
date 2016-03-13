@@ -18,7 +18,7 @@
 
   $(document).ready(function(){
     $('.ui.embed').embed();
-    $('select.dropdown')
-      .dropdown()
+    $('select.dropdown:not(".default")')
+      .dropdown({'fullTextSearch': true})
     ;
   })

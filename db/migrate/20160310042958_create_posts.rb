@@ -1,6 +1,7 @@
 class CreatePosts < ActiveRecord::Migration
   def change
     create_table :posts do |t|
+      t.string :city
       t.string :address
       t.integer :price
       t.text :description

@@ -2,18 +2,22 @@
   <i class="circular home icon"></i>
   Housing is easy.
 </h2>
-<div class="ui grid">
-  <div class="right aligned eight wide column">
-      <a class="ui basic button" href="<%= new_post_path %>">
+<div class="ui stackable grid center" id="action_wrapper">
+  <div class="sixteen wide mobile eight wide tablet eight wide computer column">
+      <a id="new_post_button" class="ui basic button" href="<%= new_post_path %>">
         <i class="icon add"></i>
-        Post
+        Post in 1 minute.
       </a>
   </div>
-  <div class="left aligned eight wide column">
-    <button class="ui basic button">
-      <i class="icon search"></i>
-      Search
-    </button>
+  <div class="sixteen wide mobile eight wide tablet eight wide computer column">
+    <%= search_form_for @q do |f| %>
+      <div class="ui action fluid input">
+        <%= f.search_field :description_or_address_cont_any, placeholder: "搜尋地址、敘述..." %>
+        <button class="ui icon button">
+          <i class="search icon"></i>
+        </button>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -24,28 +28,35 @@
   </div>
 <% end %>
 
-<div class="ui grid">
+<div class="ui column centered grid">
   <% @posts.publish.each do |post| %>
-    <div class="sixteen wide mobile eight wide tablet four wide computer column">
-      <%= render post %>
+    <div class="row">
+      <div class="column">
+        <%= render post %>
+      </div>
     </div>
   <% end %>
 </div>
 
 <%= stylesheet_link_tag    'owl-carousel/owl.carousel.css', media: 'all', 'data-turbolinks-track' => true %>
 <%= stylesheet_link_tag    'owl-carousel/owl.theme.css', media: 'all', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'owl-carousel/owl.carousel.js', 'data-turbolinks-track' => true %>
 
 <%= content_for :custom_js do %>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $(".owl-carousel").owlCarousel({
-        //autoPlay: 3000, //Set AutoPlay to 3 seconds
-        singleItem: true,
-        lazyLoad : true,
-        navigation : false,
-        pagination : false,
+  <%= javascript_include_tag 'owl-carousel/owl.carousel.js', 'data-turbolinks-track' => true %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".owl-carousel").owlCarousel({
+          //autoPlay: 3000, //Set AutoPlay to 3 seconds
+          //singleItem: true,
+          items: 2,
+          itemsDesktop: false,
+          itemsDesktopSmall: false,
+          itemsTablet: false,
+          itemsTabletSmall: false,
+          lazyLoad : true,
+          navigation : false,
+          pagination : false,
+      });
     });
-  });
-</script>
+  </script>
 <% end %>

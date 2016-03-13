@@ -2,7 +2,6 @@
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
       <% @post.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,43 +10,67 @@
     </div>
   <% end %>
     
-  
-  <div class="ui grid equal width">
-    <div class="row">
-      <div class="column">
-        <div class="field">
-          <%= f.label :price, "NT$" %>
-          <%= f.text_field :price %>
+  <div class="column">
+    <div class="field">
+      <div class="ui grid">
+        <div class="eight wide column">
+          <div class="field">
+            <%= f.label :price, "NT$" %>
+            <%= f.text_field :price %>
+          </div>
         </div>
-      </div>
-      <div class="column">
-        <div class="field">
-          <%= f.label :post_type, "Rent type" %>
-          <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui selection dropdown" %>
+        <div class="eight wide column">
+          <div class="field">
+            <%= f.label :post_type, "Rent type" %>
+            <% if browser.platform.ios? %>
+              <div class="ios_dropdown_with_icon">
+                <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui fluid dropdown default" %>
+                <i class="dropdown icon"></i>
+              </div>
+            <% else %>
+              <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui fluid selection dropdown" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-    <div class="column">
-      <div class="field">
-        <%= f.label :description, 'Tips' %>
-        <%= f.text_area :description %>
-      </div>
-
-      <div class="field">
-        <%= f.label :address %>
-        <%= f.text_field :address %>
+    <div class="field">
+      <%= f.label :description, 'Tips' %>
+      <%= f.text_area :description, rows: '10' %>
+    </div>
+    <div class="field">
+      <div class="ui grid">
+        <div class="six wide column">
+          <div class="field">
+            <%= f.label :city, "City" %>
+            <% if browser.platform.ios? %>
+              <div class="ios_dropdown_with_icon">
+                <%= f.collection_select :city, I18n.t('cities'), :first, :last, {include_blank: true, selected: "Taipei"}, class: "ui dropdown default" %>
+                <i class="dropdown icon"></i>
+              </div>
+            <% else %>
+              <%= f.collection_select :city, I18n.t('cities'), :first, :last, {include_blank: true, selected: "Taipei"}, class: "ui compact search selection dropdown" %>  
+            <% end %>
+          </div>
+        </div>
+        <div class="ten wide column">
+          <div class="field">
+            <%= f.label :address %>
+            <%= f.text_field :address %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-    
-    
-        <!-- <div class="ui embed" data-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.3228017997767!2d121.53782731486504!3d25.0570459839616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDAzJzI1LjQiTiAxMjHCsDMyJzI0LjEiRQ!5e0!3m2!1szh-TW!2stw!4v1457601553949"></div> -->
-      
+
   
+  
+      <!-- <div class="ui embed" data-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.3228017997767!2d121.53782731486504!3d25.0570459839616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDAzJzI1LjQiTiAxMjHCsDMyJzI0LjEiRQ!5e0!3m2!1szh-TW!2stw!4v1457601553949"></div> -->
     
-    <div class="column center">
-      <%= f.submit "Continue", class: "ui button basic black submit-buttom" %>
-    </div>
+
+  
+  <div class="column center">
+    <%= f.submit "Continue", class: "ui button basic black submit-buttom" %>
   </div>
 <% end %>
 <%= content_for :custom_js do %>
@@ -65,5 +88,9 @@
       })
     ;
   })
+  // $('.ui.dropdown').click(function(e){
+  //   e.preventDefault;
+  //   $('select.for_ios').click();
+  // })
 </script>
 <% end %>

@@ -30,6 +30,9 @@ gem 'mini_magick'
 gem 'fog-aws', '<= 0.1.1'
 gem 'carrierwave', github:'carrierwaveuploader/carrierwave'
 gem 'figaro'
+gem 'ransack'
+gem 'awesome_rails_console'
+gem 'browser'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -53,3 +56,8 @@ group :development do
   gem 'spring'
 end
 
+group :production do
+  gem "rack-timeout"
+  gem 'rails_12factor'
+  gem 'puma'
+end

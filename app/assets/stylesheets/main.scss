@@ -12,7 +12,7 @@ body.snow {
 }
 
 #action_wrapper {
-  max-width: 500px;
+  max-width: 480px;
   margin-right: auto !important;
   margin-left: auto !important;
 }
@@ -28,14 +28,22 @@ body.snow {
 }
 
 .ui.card.post {
-  border: 1px solid #DDD;
+  border: none;
   box-shadow: none;
-  width: auto;
-  max-width: 800px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
-  .header.address {
-    min-height: 46px;
+  .content {
+    padding: 20px 25px;
+    & > .description {
+      color: rgba(0,0,0,0.8);
+    }
   }
+}
+
+.no_horizontal_paddings {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .price-tag {
@@ -128,5 +136,30 @@ input[type="search"] {
     textarea {
       width: 100%;
     }
+  }
+}
+
+@media (min-width:768px) {
+  .ui.card.post .content { 
+    padding: 20px 30px;
+    .description p {
+      line-height: 22px;
+    }
+  }
+  .price-tag {
+    font-size: 22px;
+    padding: 20px;
+  }
+}
+
+@media (max-width:767px) {
+  .ui.card.post {
+    max-width: 480px;
+  }
+}
+
+@media (max-width:480px) {
+  .ui.card.post .header.address {
+    min-height: 46px;
   }
 }

@@ -28,10 +28,10 @@
   </div>
 <% end %>
 
-<div class="ui column centered grid">
+<div class="ui grid">
   <% @posts.publish.each do |post| %>
     <div class="row">
-      <div class="column">
+      <div class="column no_horizontal_paddings">
         <%= render post %>
       </div>
     </div>
@@ -48,7 +48,7 @@
       $(".owl-carousel").owlCarousel({
           //autoPlay: 3000, //Set AutoPlay to 3 seconds
           //singleItem: true,
-          items: 2,
+          items: 1,
           itemsDesktop: false,
           itemsDesktopSmall: false,
           itemsTablet: false,

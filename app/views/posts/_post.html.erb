@@ -1,7 +1,7 @@
 <div class="ui card post">
   <div class="content">
     <div class="right floated meta"><%= time_since(post.updated_at) %></div>
-    <div class="header address"><%= post.address %></div>
+    <div class="header address"><%= "#{post.city}#{post.address}" %></div>
   </div>
   <div class="img-price-container">
     <div class="image owl-carousel">
@@ -11,14 +11,14 @@
         <% end %>
       <% else %>
         <% for i in 1..5 do %>
-          <div class="item"><%= image_tag "https://unsplash.it/560/?random" %></div>
+          <div class="item"><%= image_tag "https://unsplash.it/600/?random" %></div>
         <% end %>
       <% end %>
     </div>
     <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) %></span>
   </div>
   <div class="content">
-    <%= image_tag "male.png", class: "ui avatar image" %><%= post.author %>
+    <%= image_tag "male.png", class: "ui avatar image" %><%= post.author.name %>
     <div class="right floated meta"><%= "#{post.attachments_count.to_i} 張圖片" %></div>
     <div class="description">
       <%= simple_format post.description %>

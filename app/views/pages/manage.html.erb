@@ -1,0 +1,20 @@
+<div class="sixteen wide mobile eight wide tablet eight wide computer column">
+  <a id="new_post_button" class="ui button" href="<%= new_post_path %>">
+    <i class="icon add"></i>
+    Post in 1 minute.
+  </a>
+</div>
+<div class="ui grid">
+  <% @posts.publish.each do |post| %>
+    <div class="row">
+      <div class="column no_horizontal_paddings">
+        <%= render post %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<h2 class="ui center aligned icon header">
+  <!-- <i class="circular home icon"></i> -->
+  It's almost done.
+</h2>
+<%= render 'posts/form' %>

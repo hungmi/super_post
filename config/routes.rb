@@ -1,14 +1,25 @@
 Rails.application.routes.draw do
-  resources :posts do
-    member do
-      get "upload_photo"
-      post "update_attachment"
-      get "preview"
-      post "publish"
+
+  root "pages#posts"
+  
+  #get "home" => "pages#posts"
+  get "search" => "pages#search"
+  get "manage" => "pages#manage"
+  get "account" => "pages#account"
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  scope module: "users" do
+    resources :posts do
+      member do
+        get "upload_photo"
+        post "update_attachment"
+        get "preview"
+        post "publish"
+      end
     end
   end
 
-  root "posts#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

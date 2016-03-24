@@ -1,0 +1,57 @@
+<div id="home">
+  <div class="ui grid">
+    <% if params[:q] && params[:q][:city_or_description_or_address_cont_any].present? && params[:q][:city_or_description_or_address_cont_any].is_a?(Array) %>
+      <div class="row">
+        <span class="center">為您找到 <%= @posts.size %> 間與<%= params[:q][:city_or_description_or_address_cont_any].map{|s| "「"+s+"」"}.join(" 或 ") %>相關的房源</span>
+      </div>
+    <% end %>
+    <% @posts.publish.each do |post| %>
+      <div class="row">
+        <div class="column no_horizontal_paddings">
+          <%= render post %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= stylesheet_link_tag 'owl-carousel/owl.carousel.css', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'owl-carousel/owl.theme.css', media: 'all', 'data-turbolinks-track' => true %>
+
+  <%= content_for :custom_js do %>
+    <%= javascript_include_tag 'owl-carousel/owl.carousel.js', 'data-turbolinks-track' => true %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(".owl-carousel").owlCarousel({
+            //autoPlay: 3000, //Set AutoPlay to 3 seconds
+            //singleItem: true,
+            items: 1,
+            itemsDesktop: false,
+            itemsDesktopSmall: false,
+            itemsTablet: false,
+            itemsTabletSmall: false,
+            lazyLoad : true,
+            navigation : false,
+            pagination : false,
+        });
+      });
+    </script>
+  <% end %>
+</div>
+
+<%= content_for :footer do %>
+  <%= render_main_btn("刊登房屋", new_post_path, class:"hidden") %>
+<% end %>
+
+<% content_for :custom_js do %>
+  <script type="text/javascript">
+    $(window).load(function(){
+      var totalHTMLHeight = $(document).height()
+      var currentBottomY = $(window).scrollTop() + $(window).height()
+      $(document).scroll(function(){
+        totalHTMLHeight = $(document).height()
+        currentBottomY = $(window).scrollTop() + $(window).height()
+        $('.main-bottom-btn').toggleClass('hidden', currentBottomY <= totalHTMLHeight-100)  
+      });
+    });
+  </script>
+<% end %>

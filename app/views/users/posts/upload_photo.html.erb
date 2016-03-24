@@ -3,8 +3,16 @@
   How does your place look ?
 </h2>
 
-<div class="center">
-  <h3 class="ui center aligned segment" id="upload_zone">輕按選擇圖片</h3>
+<div class="hidden">
+  <%= form_tag update_attachment_post_path(post_id: @post.id), multipart: true, id: "upload_form" do %>
+    <%= file_field_tag "file[]", multiple: true %>
+    <%= semantic_icon('remove deletePhoto') %>
+    <%= submit_tag %>
+  <% end %>
+</div>
+
+<div class="center">  
+  <!-- <h3 class="ui center aligned segment main-bottom-btn" id="upload_zone">輕按選擇圖片</h3> -->
   <div class="ui stackable four column grid" id="photoPreviewBlock"></div>
   <button class="ui basic large button hidden submit-buttom" id="upload_button">確定上傳</button>
 </div>
@@ -23,13 +31,13 @@
   </div>
 <% end %>
 
-<div class="hidden">
-  <%= form_tag update_attachment_post_path(post_id: @post.id), multipart: true, id: "upload_form" do %>
-    <%= file_field_tag "file[]", multiple: true %>
-    <%= semantic_icon('remove deletePhoto') %>
-    <%= submit_tag %>
+<%= content_for :footer do %>
+  <% if @post.attachments_count.zero? %>
+    <%= render_main_btn("選擇圖片","#",id:"upload_zone") %>
+  <% else %>
+    <%= render_main_btn("增加圖片","#",id:"upload_zone") %>
   <% end %>
-</div>
+<% end %>
 
 <%= content_for :custom_js do %>
   <script type="text/javascript">
@@ -44,7 +52,7 @@
       var files = $(this).prop('files')
       for (var i=0; i<files.length; i++) { readURL(files[i]); }
       $('#upload_button').removeClass('hidden');
-      $('#upload_zone').css('color','#aaa');
+      //$('#upload_zone').css('color','#aaa');
       $('#upload_zone').html('重新選擇圖片');
     });
     function readURL(file) {

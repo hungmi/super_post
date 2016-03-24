@@ -9,4 +9,6 @@ class Post < ActiveRecord::Base
   default_scope { order(updated_at: :desc) }
 
   validates :price, :post_type, :description, :address, presence: true
+
+  belongs_to :author, class_name: "User", foreign_key: :author_id
 end

@@ -1,0 +1,24 @@
+<%= search_form_for @q do |f| %>
+  <div class="ui stackable grid center action_wrapper" id="action_wrapper">
+    <div class="sixteen wide mobile eight wide tablet four wide computer column">
+      <div class="ui action fluid input">
+        <% if browser.platform.ios? %>
+          <div class="ios_dropdown_with_icon">
+            <%= f.collection_select :city_eq, I18n.t('cities'), :last, :last, {include_blank: "城市"}, class: "ui selection compact dropdown default" %>
+            <i class="dropdown icon"></i>
+          </div>
+        <% else %>
+          <%= f.collection_select :city_eq, I18n.t('cities'), :last, :last, {include_blank: "城市"}, class: "ui fluid search selection dropdown" %>  
+        <% end %>
+      </div>
+    </div>
+    <div class="sixteen wide mobile eight wide tablet eight wide computer column">
+      <div class="ui fluid input" id="search_input">
+        <%= f.search_field :city_or_description_or_address_cont_any, placeholder: "搜尋地址、敘述..." %>
+      </div>
+    </div>
+  </div>
+  <div class="column center fixed-button-wrapper">
+    <%= f.submit "Continue", class: "ui button yellow submit-buttom fixed-button" %>
+  </div>
+<% end %>

@@ -6,4 +6,12 @@ module PostsHelper
       ["基隆市","台北市","宜蘭縣","新竹市","新竹縣","桃園市","苗栗縣","台中市","彰化縣","南投縣","嘉義市","嘉義縣","雲林縣","台南市","高雄市","屏東縣","台東縣","花蓮縣","金門縣","連江縣","澎湖縣"]
     end
   end
+
+  def render_main_btn(text = nil, path = "#", html_options = {class:nil, id:nil})
+    default_class = "ui button yellow main-bottom-btn"
+    html_options[:class] = "#{default_class} #{html_options[:class]}"
+    link_to path, html_options do
+      text
+    end
+  end
 end

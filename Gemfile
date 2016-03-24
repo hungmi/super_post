@@ -58,8 +58,17 @@ group :development do
   gem 'spring'
 end
 
+gem 'puma'
+group :development do
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
+end
+
 group :production do
   gem "rack-timeout"
   gem 'rails_12factor'
-  gem 'puma'
+  #gem 'puma'
 end

@@ -36,6 +36,7 @@ gem 'browser'
 gem 'devise'
 gem 'omniauth', '1.2.2'
 gem 'omniauth-facebook', '3.0.0'
+gem 'bundler', '1.11.2'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.10'

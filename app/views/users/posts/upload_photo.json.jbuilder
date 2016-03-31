@@ -1,8 +1,8 @@
-json.array!(@post.attachments) do |a|
-  json.extract! a, :id
-  # json.size a.image.size
-  json.url a.image.url
-  json.thumbnailUrl a.image.small.url
-  json.deleteUrl attachment_url(a)
+@file = @post.attachments.order(:id).last
+json.file do
+  json.id @file.id
+  json.url @file.image.url
+  json.thumbnailUrl @file.image.medium.url
+  json.deleteUrl attachment_url(@file)
   json.deleteType "DELETE"
 end

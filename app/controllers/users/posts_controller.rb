@@ -69,8 +69,8 @@ class Users::PostsController < ApplicationController
 
   def update_attachment
     respond_to do |format|
-      if params[:files]
-        params[:files].each { |picture| @post.attachments.create(:image => picture) }
+      if params[:file]
+        params[:file].each { |picture| @post.attachments.create(:image => picture) }
       end
       format.html { redirect_to upload_photo_post_path }
       format.json { render :upload_photo, status: :created, location: @post }
@@ -81,8 +81,10 @@ class Users::PostsController < ApplicationController
     if @post.publish?
       redirect_to posts_path
     elsif @post.draft?
-      if @post.valid?
+      if @post.can_publish? # 檢查各屬性及圖片數量大於 1
         @post.hidden!
+      elsif @post.attachments_count.zero?
+        redirect_to upload_photo_post_path(@post)
       else
         redirect_to edit_post_path(@post)
       end

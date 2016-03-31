@@ -18,7 +18,7 @@
     width: 100%;
   }
 </style>
-<input class="hidden" id="fileupload" type="file" name="files[]" multiple="">
+<input class="hidden" id="fileupload" type="file" name="file[]" multiple="">
 
 <div id="files" class="files ui stackable grid container center"></div>
 
@@ -33,22 +33,22 @@
   </div>
 <% end %>
 
-<% if @post.attachments_count.present? && @post.attachments_count > 0 %>
-  <h3><%= "已上傳圖片 #{@post.attachments_count} 張" %></h3>
-  <div id="images" class="ui stackable grid container">
-  <% @post.attachments.each_with_index do |a,i| %>
-    <div class="four wide column" style="text-align: center;">
-      <%= image_tag a.image.medium.url, class: 'center' %>
-      <!-- <div class="desc"><%#= text_area_tag 'description', a.description %></div> -->
-    </div>
-  <% end %>
-  </div>
-  <div class="center">
-    <%= link_to preview_post_path(@post), class: "ui green button submit-buttom" do %>
-      下一步
+<div id="images" class="ui stackable grid container">
+  <% if @post.attachments_count.present? && @post.attachments_count > 0 %>
+    <% @post.attachments.each do |a| %>
+      <div class="four wide column" style="text-align: center;">
+        <i class="remove icon huge red" style="position: absolute; margin-left: 0px; right: 0px;" data-id="<%= a.id %>"></i>
+        <%= image_tag a.image.medium.url, class: 'center' %>
+        <!-- <div class="desc"><%#= text_area_tag 'description', a.description %></div> -->
+      </div>
     <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>
+<div class="center">
+  <%= link_to preview_post_path(@post), class: "ui green button submit-buttom hidden", "data-no-turbolink": true do %>
+    下一步
+  <% end %>
+</div>
 
 <%= content_for :custom_js do %>
   <%= javascript_include_tag 'jQueryFileUpload/load-image.all.min', 'data-turbolinks-track' => true %>
@@ -62,104 +62,57 @@
     $('#upload_zone').click(function(){
       $('#fileupload').click()
     })
-
   </script>
   <script type="text/javascript">
     
-/*jslint unparam: true, regexp: true */
-/*global window, $ */
-$(function () {
-    'use strict';
-    // Change this to the location of your server-side upload handler:
-    var url = "<%= update_attachment_post_path %>",
-        uploadButton = $('<button/>')
-            .addClass('btn btn-primary')
-            .prop('disabled', true)
-            .text('Processing...')
-            .on('click', function () {
-                var $this = $(this),
-                    data = $this.data();
-                $this
-                    .off('click')
-                    .text('Abort')
-                    .on('click', function () {
-                        $this.remove();
-                        data.abort();
-                    });
-                data.submit().always(function () {
-                    $this.remove();
-                });
-            });
-    $('#fileupload').fileupload({
-        url: url,
+    $(function () {
+      $('.submit-buttom').toggleClass('hidden', $('#images .icon.remove').length === 0)
+      $('#fileupload').fileupload({
+        url: "<%= update_attachment_post_path %>",
         dataType: 'json',
-        autoUpload: false,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 999000,
-        // Enable image resizing, except for Android and Opera,
-        // which actually support image resizing, but fail to
-        // send Blob objects via XHR requests:
-        disableImageResize: /Android(?!.*Chrome)|Opera/
-            .test(window.navigator.userAgent),
-        previewMaxWidth: 300,
-        previewMaxHeight: 300,
-        previewCrop: true
-    }).on('fileuploadadd', function (e, data) {
-        data.context = $('<div class="four wide column"/>').appendTo('#files');
-        $.each(data.files, function (index, file) {
-            var node = $('<p/>');
-            if (!index) {
-                node
-                    .append(uploadButton.clone(true).data(data));
-            }
-            node.appendTo(data.context);
-        });
-    }).on('fileuploadprocessalways', function (e, data) {
-        var index = data.index,
-            file = data.files[index],
-            node = $(data.context.children()[index]);
-        if (file.preview) {
-            node
-                .prepend('<br>')
-                .prepend(file.preview)
-                .prepend('<i class="icon huge remove" style="position: absolute;right: 0px;margin-right: 0px;"></i>');
+        start: function (e) {
+          $("#upload_zone").find('i.icon').replaceWith('<i class="spinner loading huge icon"></i>');
+          $("#upload_zone").find('.content').html("上傳中，請稍候...")
+          $("#upload_zone").unbind( "click" );
+        },
+        done: function (e, data) {
+          // console.log(data.result.file.url)
+          $("#upload_zone").find('i.icon').removeClass('loading')
+          $('#images').prepend('<div class="four wide column" style="text-align: center;"><i class="remove icon huge red" style="position: absolute; margin-left: 0px; right: 0px;"></i><img src="' + data.result.file.thumbnailUrl + '" class="center"/></div>')
+          if ($('#images .icon.remove').length > 0) {
+            $('.submit-buttom').removeClass('hidden')
+          };
+          $("#upload_zone").find('i.icon').replaceWith('<i class="icon bordered huge plus black"></i>');
+          $("#upload_zone").find('.content').html("繼續選擇圖片")
+          $('#upload_zone').click(function(){
+            $('#fileupload').click()
+          })
         }
-        if (file.error) {
-            node
-                .append('<br>')
-                .append($('<span class="text-danger"/>').text(file.error));
+      })
+
+      $('#images .icon.remove').click(function(){
+        $(this).parent("div.column").remove();
+        if ($('#images .icon.remove').length === 0) {
+          $('.submit-buttom').addClass('hidden')
         }
-        if (index + 1 === data.files.length) {
-            data.context.find('button')
-                .text('Upload')
-                .prop('disabled', !!data.files.error);
-        }
-    }).on('fileuploaddone', function (e, data) {
-        $.each(data.result.files, function (index, file) {
-            if (file.url) {
-                console.log(data.context.children())
-                var link = $('<a>')
-                    .attr('target', '_blank')
-                    .prop('href', file.url);
-                $(data.context.children()[index])
-                    .wrap(link);
-            } else if (file.error) {
-                var error = $('<span class="text-danger"/>').text(file.error);
-                $(data.context.children()[index])
-                    .append('<br>')
-                    .append(error);
-            }
+        file_id = $(this).data('id');
+        $.ajax({
+          type      : 'DELETE',
+          data      : { "attachment": { "id": file_id } }, // our data object
+          url       : "/attachments/"+file_id, // the url where we want to POST
+          dataType  : 'json', // what type of data do we expect back from the server
+          encode    : true
+        })
+        // using the done promise callback
+        .done(function(data) {
+
+          // log data to the console so we can see
+          console.log(data);
+
+          // here we will handle errors and validation messages
         });
-    }).on('fileuploadfail', function (e, data) {
-        $.each(data.files, function (index) {
-            var error = $('<span class="text-danger"/>').text('File upload failed.');
-            $(data.context.children()[index])
-                .append('<br>')
-                .append(error);
-        });
-    }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
-});
+      })
+    });
 
   </script>
 <% end %>

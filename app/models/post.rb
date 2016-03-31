@@ -29,6 +29,10 @@ class Post < ActiveRecord::Base
   end
 
   def can_publish?
-    self.hidden? && self.valid?
+    self.valid? && self.attachments_count > 0
+  end
+
+  def i18n_type
+    I18n.t("post_type.#{self.post_type}")
   end
 end

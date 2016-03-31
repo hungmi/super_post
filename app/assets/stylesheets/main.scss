@@ -138,6 +138,19 @@ h2.ui.header {
   color: white;
 }
 
+.post-type-tag {
+  position: absolute;
+  background-color: rgba(157,157,157,0.6);
+  color: white;
+  right: 1%;
+  top: 1%;
+  z-index: 999;
+  border: 2px solid white;
+  border-radius: 500em;
+  font-size: 20px;
+  padding: 10px;
+}
+
 .img-price-container {
   position: relative;
   .price-tag {
@@ -215,8 +228,7 @@ input[type="search"] {
   img {
     padding: 0px;
     border: 1px solid #ccc;
-    max-height: 300px;
-    max-width: 100%;
+    width: 100%;
   }
   div.desc {
     padding: 0px;

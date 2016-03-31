@@ -8,47 +8,56 @@
   <%= favicon_link_tag %>
 </head>
 <body class="snow">
-  <div class="ui menu">
-    <div class="ui container">
+  
+
+  <div class="ui left vertical inverted sidebar labeled icon menu">
+    <a class="item<%= ' active' if action_name == 'posts' %>" href="/" data-no-turbolink=true>
+      <i class="big home icon"></i>
+      首頁
+    </a>
+    <a class="item <%= render_active(action_name == 'profile' || current_page?(controller:'devise/sessions', action:'new')) %>" href="<%= user_signed_in? ? profile_path : new_user_session_path %>" data-no-turbolink=true>
+      <i class="big user icon"></i>
+      帳號管理
+    </a>
+  </div>
+
+  <div class="pusher">
+    <div class="ui top attached menu">
+      <a class="item" style="position: absolute; height: 52.1406px;">
+        <i class="sidebar icon"></i>
+      </a>
       <%= link_to root_path, class: "logo item center", id: "logo-img-link" do %>
         <%= image_tag 'logo-f.png', id: "logo-img" %>
       <% end %>
-      <!-- <div class="menu">
-        <%#= link_to "Post", new_post_path, class: "item" %>
-        <div class="ui simple dropdown item">
-          More <i class="dropdown icon"></i>
-          <div class="menu">
-            <%#= link_to "My Posts", root_path, class: "item" %>
-            <%#= link_to "Saved Posts", root_path, class: "item" %>
-            <div class="divider"></div>
-            <div class="header">Help</div>
-            <a class="item" href="#">Q & A</a>
-            <a class="item" href="#">Contact Us</a>
+    </div>
+
+    <% if flash.any? %>
+      <% flash.map do |type, message| %>
+        <div class="ui icon message <%= type.to_s == 'success' ? 'success' : 'info' %>">
+          <i class="<%= type.to_s == 'success' ? 'checkmark' : 'info' %> icon"></i>
+          <div class="header">
+            <%= raw message %>
           </div>
         </div>
-      </div> -->
-    </div>
-  </div>
-
-  <% if flash.any? %>
-    <% flash.map do |type, message| %>
-      <div class="ui icon message <%= type.to_s %>">
-        <i class="<%= type.to_s == 'success' ? 'checkmark' : 'info' %> icon"></i>
-        <div class="header">
-          <%= raw message %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <%= yield :outside %>
-  <div class="ui main container <%= 'large-margin-bottom' if (current_page?(root_path) || action_name == 'upload_photo') %>">
-    <%= yield %>
+    <%= yield :outside %>
+    <div class="ui main container <%= 'large-margin-bottom' if (current_page?(root_path) || action_name == 'upload_photo') %>">
+      <%= yield %>
+    </div>
+
+    <%= render "partials/footer" %>
   </div>
-
-  <%= render "partials/footer" %>
   
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= yield :custom_js %>
+  <script type="text/javascript">
+    $('i.sidebar.icon').click(function(){
+      $('.ui.sidebar')
+        .sidebar('toggle')
+      ;
+    })
+  </script>
 </body>
 </html>

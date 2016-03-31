@@ -6,6 +6,7 @@
   </div>
 
   <div class="img-price-container">
+    <span class="post-type-tag"><%= post.i18n_type %></span>
     <div class="image owl-carousel">
       <% if post.attachments_count.zero? %>
         <% for i in 1..5 do %>
@@ -19,7 +20,7 @@
     </div>
     <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) %></span>
   </div>
-  
+
   <div class="content">
     <%= image_tag "male.png", class: "ui avatar image" %>
     <%= link_to post.author.fb, target: "_blank" do %>

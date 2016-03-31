@@ -1,27 +1,27 @@
-<h2 class="ui center aligned icon header">
+<h2 class="ui center aligned header" style="margin-bottom: 30px;">
   <!-- <i class="circular home icon"></i> -->
-  Check before you submit.
+  預覽您的物件
 </h2>
-<div class="ui stackable three column grid centered">
-  <div class="column">
-    <%= render @post %>
+
+<div id="home">
+  <div class="ui grid">
+    <div class="row">
+      <div class="column no_horizontal_paddings">
+        <%= render "posts/post", post: @post %>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="center">
-  <%= button_to "完成刊登", publish_post_path(post_id: @post.id), class: "ui basic black large button center submit-buttom" %>
-  <%= link_to "回去編輯", edit_post_path(@post), class: "ui large center submit-buttom" %>
-</div>
-
 <%= content_for :custom_js do %>
-<script type="text/javascript">
-  $(".owl-carousel").owlCarousel({
-      //autoPlay: 3000, //Set AutoPlay to 3 seconds
-      singleItem: true,
-      // itemsDesktop : [1199,3],
-      // itemsDesktopSmall : [979,3]
-      lazyLoad : true,
-      navigation : false
-  });
-</script>
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+        //autoPlay: 3000, //Set AutoPlay to 3 seconds
+        singleItem: true,
+        // itemsDesktop : [1199,3],
+        // itemsDesktopSmall : [979,3]
+        lazyLoad : true,
+        navigation : false
+    });
+  </script>
 <% end %>

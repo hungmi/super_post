@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!, only: [:profile]
 
   def posts
     @posts = Post.all
@@ -12,7 +13,7 @@ class PagesController < ApplicationController
     @posts = @q.result(distinct: true)
   end
 
-  def account
+  def profile
     
   end
 

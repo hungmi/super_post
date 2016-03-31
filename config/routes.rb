@@ -5,17 +5,21 @@ Rails.application.routes.draw do
   #get "home" => "pages#posts"
   get "search" => "pages#search"
   get "manage" => "pages#manage"
-  get "account" => "pages#account"
+  get "profile" => "pages#profile"
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   scope module: "users" do
     resources :posts do
+      collection do
+        get "remind_for_draft"
+      end
       member do
         get "upload_photo"
         post "update_attachment"
         get "preview"
         post "publish"
+        post "unpublish"
       end
     end
   end

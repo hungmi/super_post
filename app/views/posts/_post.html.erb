@@ -1,29 +1,38 @@
 <div class="ui card post">
+
   <div class="content">
     <div class="right floated meta"><%= time_since(post.updated_at) %></div>
     <div class="header address"><%= "#{post.city}#{post.address}" %></div>
   </div>
+
   <div class="img-price-container">
     <div class="image owl-carousel">
-      <% if post.attachments_count.present? %>
-        <% post.attachments.each do |a| %>
-          <div class="item"><%= image_tag a.image.large.url %></div>
+      <% if post.attachments_count.zero? %>
+        <% for i in 1..5 do %>
+          <div class="item"><%= image_tag "https://unsplash.it/450/?random" %></div>
         <% end %>
       <% else %>
-        <% for i in 1..5 do %>
-          <div class="item"><%= image_tag "https://unsplash.it/600/?random" %></div>
+        <% post.attachments.each do |a| %>
+          <div class="item"><%= image_tag a.image.large.url %></div>
         <% end %>
       <% end %>
     </div>
     <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) %></span>
   </div>
+  
   <div class="content">
-    <%= image_tag "male.png", class: "ui avatar image" %><%= post.author.name %>
+    <%= image_tag "male.png", class: "ui avatar image" %>
+    <%= link_to post.author.fb, target: "_blank" do %>
+      <%= post.author.name %>
+      <i class="facebook icon"></i>
+    <% end %>
     <div class="right floated meta"><%= "#{post.attachments_count.to_i} 張圖片" %></div>
     <div class="description">
       <%= simple_format post.description %>
     </div>
   </div>
+
+  <%= render "users/partials/user_post_bottom_buttons", post: post %>
   <!-- <div class="content">
     <span class="right floated">
       <i class="heart outline like icon"></i>

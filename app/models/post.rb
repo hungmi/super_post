@@ -10,5 +10,20 @@ class Post < ActiveRecord::Base
 
   validates :price, :post_type, :description, :address, presence: true
 
-  belongs_to :author, class_name: "User", foreign_key: :author_id
+  belongs_to :author, class_name: "User", foreign_key: :author_id, counter_cache: true
+
+  def self.valid_attribute?(attr, value)
+    mock = self.new(attr => value)
+    unless mock.valid?
+      return !mock.errors.has_key?(attr)
+    end
+    true
+  end
+
+  def self.valid_attributes?(params)
+    params.each do |k,v|
+      return false unless self.valid_attribute?(k,v)
+    end
+    true
+  end
 end

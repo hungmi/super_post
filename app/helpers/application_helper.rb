@@ -13,4 +13,8 @@ module ApplicationHelper
       return "#{(difference).round} secs"
     end
   end
+
+  def render_active(condition)
+    "active" if condition
+  end
 end

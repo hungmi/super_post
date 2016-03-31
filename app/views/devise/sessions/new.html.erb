@@ -1,0 +1,27 @@
+<div class="center">
+  <!-- <h2 class="ui center aligned icon header">
+    <i class="circular home icon"></i>
+    Housing is easy.
+  </h2> -->
+  <%= image_tag "logo.png", class: 'ui small circular center image', id: 'zuker-avatar' %>
+  <h3>
+    歡迎來到極速刊登 - Zuker
+  </h3>
+  <ul id="app_benefits">
+    <li>五分鐘刊登</li>
+    <li>Facebook 溝通</li>
+    <li>登入後即可刊登房屋</li>
+  </ul>
+
+  <% if false#flash.any? %>
+    <div class="ui success message">
+      <i class="close icon"></i>
+      <div class="header"><%= notice %></div>
+    </div>
+  <% end %>
+
+  <%= link_to user_omniauth_authorize_path(:facebook), class:'ui button facebook' do %>
+    <i class="facebook icon"></i>
+    Facebook 登入
+  <% end %>
+</div>

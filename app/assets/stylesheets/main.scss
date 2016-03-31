@@ -3,6 +3,13 @@ $main-bottom-menu-height: 59px;
 
 body.snow {
   background-color: whitesmoke !important;
+  h1, h2, h3, h4, h5, p {
+    font-family: "Hiragino Sans GB" !important;
+  }
+}
+
+h2.ui.header {
+  font-size: 1.614rem;
 }
 
 .ui.header {
@@ -25,7 +32,10 @@ body.snow {
   padding-top: 0px;
 }
 
-#logo-img-link.logo.item { padding: 4px; }
+#logo-img-link.logo.item { 
+  padding: 4px;
+  border-left: 0px;
+}
 #logo-img { width: 9.5em; }
 
 #main-bottom-menu {
@@ -35,15 +45,19 @@ body.snow {
   width: 100%;
   margin: 0px;
   border-radius: 0px;  
-  min-height: $main-bottom-menu-height;
-  padding: 0.8em 1em;
+  //min-height: $main-bottom-menu-height;
+  padding: 0.7em 1em 0.9em 1em;
   background-color: black;
-  .ui.menu .item {
-    padding-top: 3px;
-    padding-bottom: 13px;
-    i.icon { margin-right: 0px; }
-    &.active {
-      border-bottom: 2px solid $primary-color;
+  .ui.menu {
+    margin-top: 0px;
+    box-shadow: none;
+    .item {
+      padding-top: 3px;
+      padding-bottom: 5px;
+      i.icon { margin-right: 0px; }
+      &.active {
+        border-bottom: 2px solid $primary-color;
+      }
     }
   }
 }
@@ -51,10 +65,15 @@ body.snow {
 .main.container {
   // 這三行主要是為了清除 body 底下的多餘空白
   top: 1em;
-  position: relative;
-
-  margin-bottom: 110px;
+  //position: relative;
+  clear: both;
+  margin-bottom: 16%;
+  margin-bottom: 100px;
   max-width: 723px !important;
+  //display: inline-block;
+  &.large-margin-bottom {
+    margin-bottom: 110px;
+  }
 }
 
 .action_wrapper {
@@ -78,7 +97,7 @@ body.snow {
   }
   position: absolute;
   margin-bottom: 10px;
-  bottom: 70px;
+  bottom: 57px;
   left: 0px;
   padding: 19px !important;
   border-radius: 0px !important;
@@ -95,7 +114,7 @@ body.snow {
     font-size: 1.1em;
     .description {
       p {
-        color: rgba(0,0,0,0.78);
+        color: rgba(0,0,0,0.88);
         line-height: 1.5;
       }
     }
@@ -110,7 +129,7 @@ body.snow {
 .price-tag {
   font-size: 20px;
   padding: 15px;
-  background-color: rgba(207,207,207,0.3);
+  background-color: rgba(157,157,157,0.6);
   color: white;
 }
 
@@ -190,7 +209,7 @@ input[type="search"] {
   img {
     padding: 0px;
     border: 1px solid #ccc;
-    max-height: 150px;
+    max-height: 300px;
     max-width: 100%;
   }
   div.desc {
@@ -202,20 +221,37 @@ input[type="search"] {
   }
 }
 
-#account {
-  .account-actions a.button {
-    width: 100%;
-    color: black !important;
-    background-color: white !important;
-    border: 0px;
-    border-radius: 0px;
-    //text-align: left;
-    padding: 19px;
-  }
+#profile-actions {
+  border: 0px;
+  // margin: 0 -14px;
+  // a.button {
+  //   margin-right: 0px;
+  //   width: 100%;
+  //   color: black !important;
+  //   background-color: white !important;
+  //   border: 0px;
+  //   border-radius: 0px;
+  //   //text-align: left;
+  //   padding: 19px;
+  // }
 }
 
-#user-avatar {
+#user-avatar, #zuker-avatar {
   border: 2px solid white;
+}
+
+.ui.button.facebook {
+  width: 100%;
+  padding: 17px;
+}
+
+#app_benefits {
+  li {
+    list-style: none;
+  }
+  padding-left: 0px;
+  line-height: 2em;
+  color: black;
 }
 
 .fixed-button-wrapper {
@@ -227,6 +263,25 @@ input[type="search"] {
     width: 100%;
     border-radius: 0px !important;
     padding: 20px;
+  }
+}
+
+textarea {
+  line-height: 1.5;
+}
+
+.ui.icon.message > .icon.small {
+  font-size: 2em;
+}
+
+#post-btn {
+  background: #21ba45 !important;
+  border: none;
+  box-shadow: none;
+  margin-left: -1em;
+  margin-right: -1em;
+  * {
+    color: white;
   }
 }
 
@@ -260,7 +315,20 @@ input[type="search"] {
   .ui.card.post .header.address {
     min-height: 46px;
   }
-  #account {
+  #profile {
+    #user-avatar { 
+      width: 150px;
+      height: 150px;
+    }
+    & > div.column {
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+    }
+  }
+}
+
+@media (max-width:320px) {
+  #profile {
     #user-avatar { 
       width: 110px;
       height: 110px;
@@ -271,7 +339,3 @@ input[type="search"] {
     }
   }
 }
-// width: 80%;
-//     margin: 0 20px;
-//     padding: 10px 0px;
-//     border-bottom: 2px solid yellow;

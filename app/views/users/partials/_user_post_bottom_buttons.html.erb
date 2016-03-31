@@ -1,0 +1,28 @@
+<% if current_page?(posts_path) || current_page?(preview_post_path(post)) %>
+  <div class="extra content">
+    <div class="ui two buttons">
+      <% if post.publish? %>
+        <%= link_to unpublish_post_path(post), method: :post, class: "ui basic red button" do %>
+          <i class="remove icon"></i>
+          取消發佈
+        <% end %>
+      <% else %>
+        <% if current_page?(posts_path) %>
+          <%= link_to preview_post_path(post), class: "ui basic green button" do %>
+            <i class="external icon"></i>
+            前往發佈
+          <% end %>
+        <% elsif current_page?(preview_post_path(post)) %>
+          <%= link_to publish_post_path(post), method: :post, class: "ui basic green button" do %>
+            <i class="checkmark icon"></i>
+            確認發佈
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= link_to edit_post_path(post), class: "ui basic grey button" do %>
+        <i class="edit icon"></i>
+        編輯
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -13,7 +13,7 @@ class CreatePosts < ActiveRecord::Migration
       # Must Have
       t.belongs_to :author
       t.string :token
-      t.integer :attachments_count
+      t.integer :attachments_count, default: 0
 
       t.timestamps null: false
     end

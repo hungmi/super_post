@@ -1,6 +1,6 @@
 <h2 class="ui center aligned icon header">
   <!-- <i class="circular home icon"></i> -->
-  How does your place look ?
+  請提供幾張照片
 </h2>
 
 <div class="hidden">
@@ -18,6 +18,7 @@
 </div>
 
 <% if @post.attachments_count.present? && @post.attachments_count > 0 %>
+  <h3><%= "已上傳圖片 #{@post.attachments_count} 張" %></h3>
   <div id="images" class="ui stackable grid container">
   <% @post.attachments.each_with_index do |a,i| %>
     <div class="four wide column" style="text-align: center;">
@@ -27,7 +28,10 @@
   <% end %>
   </div>
   <div class="center">
-    <%= link_to "上傳完了！", preview_post_path(post_id: @post.id), class: "ui basic large button submit-buttom" %>
+    <%= link_to preview_post_path(@post), class: "ui basic green button submit-buttom" do %>
+      <i class="icon plus"></i>
+      上傳更多圖片
+    <% end %>
   </div>
 <% end %>
 
@@ -35,7 +39,7 @@
   <% if @post.attachments_count.zero? %>
     <%= render_main_btn("選擇圖片","#",id:"upload_zone") %>
   <% else %>
-    <%= render_main_btn("增加圖片","#",id:"upload_zone") %>
+    <%= render_main_btn("上傳更多圖片","#",id:"upload_zone") %>
   <% end %>
 <% end %>
 
@@ -45,12 +49,15 @@
       $('input[type="file"][name="file[]"]').click();
     });
     $("#upload_button").click(function(){
+      $('#upload_zone').addClass('loading');
+      $(this).addClass('hidden');
       $('#upload_form').submit();
     });
     $('input[type="file"][name="file[]"]').change(function(){
       $('#photoPreviewBlock').html('');
       var files = $(this).prop('files')
       for (var i=0; i<files.length; i++) { readURL(files[i]); }
+      $('#upload_button').text("上傳 "+files.length+" 張圖片")  
       $('#upload_button').removeClass('hidden');
       //$('#upload_zone').css('color','#aaa');
       $('#upload_zone').html('重新選擇圖片');

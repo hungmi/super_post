@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
     end
   end
+
+  def has_draft?
+    return self.posts.hidden.present?
+  end
 end

@@ -1,0 +1,33 @@
+<div class="center" id="profile">
+  <%= image_tag current_user.image, class: 'ui circular center image', id: 'user-avatar' %>
+  <h2 class="ui center aligned header" style="margin: 15px; font-weight: normal;">
+    <%= current_user.name %>
+  </h2>
+
+  <div class="ui fluid one item labeled icon menu" id="post-btn">
+    <%= link_to remind_for_draft_posts_path, class:'item' do %>
+      <i class="plus icon"></i>
+      刊登房屋
+    <% end %>
+  </div>
+
+  <div class="ui fluid three item labeled icon menu" id="profile-actions">
+    <%= link_to posts_path, class:'item' do %>
+      <i class="home icon"></i>
+      管理房屋
+    <% end %>
+    <%= link_to ENV["zuker_community_shorturl"], class:'item', target:"_blank" do %>
+      <i class="facebook square icon"></i>
+      關於 Zuker
+    <% end %>
+    <%= link_to destroy_user_session_path, :method => :delete, class:'item' do %>
+      <i class="sign out icon"></i>
+      登出
+    <% end %>
+  </div>
+
+</div>
+
+<%= content_for :footer do %>
+  <%#= render_main_btn("刊登房屋", remind_for_draft_posts_path) %>
+<% end %>

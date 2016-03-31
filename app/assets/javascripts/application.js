@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require semantic-ui
 //= require turbolinks
-//= require_tree .
 
   $(document).ready(function(){
     $('.ui.embed').embed();

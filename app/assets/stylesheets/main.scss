@@ -14,6 +14,9 @@ h2.ui.header {
 
 .ui.header {
   color: rgba(28, 75, 101, 0.9);
+  &.icon .content {
+    padding-left: 0px;
+  }
 }
 
 .ui.menu {
@@ -28,8 +31,13 @@ h2.ui.header {
   background: none;
 }
 
-#home .ui.grid .row:first-child {
-  padding-top: 0px;
+#home .ui.grid {
+  .row:first-child {
+    padding-top: 0px;
+  }
+  .row:last-child {
+    padding-bottom: 0px;
+  }
 }
 
 #logo-img-link.logo.item { 
@@ -64,16 +72,13 @@ h2.ui.header {
 
 .main.container {
   // 這三行主要是為了清除 body 底下的多餘空白
-  top: 1em;
+  margin-top: 1em;
   //position: relative;
-  clear: both;
-  margin-bottom: 16%;
-  margin-bottom: 100px;
   max-width: 723px !important;
   //display: inline-block;
-  &.large-margin-bottom {
-    margin-bottom: 110px;
-  }
+  // &.large-margin-bottom {
+  //   margin-bottom: 110px;
+  // }
 }
 
 .action_wrapper {
@@ -97,7 +102,7 @@ h2.ui.header {
   }
   position: absolute;
   margin-bottom: 10px;
-  bottom: 57px;
+  bottom: 0px;//57px;
   left: 0px;
   padding: 19px !important;
   border-radius: 0px !important;
@@ -187,7 +192,7 @@ input[type="search"] {
 }
 
 .ui.button.submit-buttom {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   margin-top: 10px;
 }
 
@@ -199,6 +204,7 @@ input[type="search"] {
   cursor: pointer;
   //max-width: 300px;
   margin: auto;
+  margin-bottom: 20px;
 }
 
 #photoPreviewBlock {
@@ -254,24 +260,25 @@ input[type="search"] {
   color: black;
 }
 
-.fixed-button-wrapper {
-  position: fixed;
-  bottom: $main-bottom-menu-height;
-  left: 0px;
-  width: 100%;
-  .fixed-button {
-    width: 100%;
-    border-radius: 0px !important;
-    padding: 20px;
-  }
-}
+// .fixed-button-wrapper {
+//   position: fixed;
+//   bottom: $main-bottom-menu-height;
+//   left: 0px;
+//   width: 100%;
+//   .fixed-button {
+//     width: 100%;
+//     border-radius: 0px !important;
+//     padding: 20px;
+//   }
+// }
 
 textarea {
   line-height: 1.5;
 }
 
-.ui.icon.message > .icon.small {
-  font-size: 2em;
+.ui.icon.message {
+  border-radius: 0px;
+  margin: 0em;
 }
 
 #post-btn {

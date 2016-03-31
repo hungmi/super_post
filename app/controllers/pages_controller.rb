@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   before_action :authenticate_user!, only: [:profile]
 
   def posts
-    @posts = Post.all
+    @posts = Post.publish.all
   end
 
   def search

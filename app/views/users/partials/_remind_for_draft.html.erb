@@ -1,13 +1,7 @@
 <div class="ui icon info message">
   <i class="info icon"></i>
   <div class="header">
-    您快完成刊登了！
-    <div class="content">
-      <% if current_user.has_draft? %>
-        <%= link_to("繼續上次的刊登", edit_post_path(current_user.posts.hidden.try(:first))) %>
-        |
-      <% end %>
-      <%= link_to("新的一筆刊登", new_post_path) %>
-    </div>
+    您有一筆刊登快完成了<br>
+    <%= link_to("前往完成", edit_post_path(current_user.posts.draft.try(:first))) %>
   </div>
 </div>

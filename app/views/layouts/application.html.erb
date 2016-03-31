@@ -30,17 +30,17 @@
     </div>
   </div>
 
-  <% if false#flash.any? %>
+  <% if flash.any? %>
     <% flash.map do |type, message| %>
       <div class="ui icon message <%= type.to_s %>">
-        <i class="info icon small"></i>
-        <div class="content">
+        <i class="<%= type.to_s == 'success' ? 'checkmark' : 'info' %> icon"></i>
+        <div class="header">
           <%= raw message %>
         </div>
       </div>
     <% end %>
   <% end %>
-  
+
   <%= yield :outside %>
   <div class="ui main container <%= 'large-margin-bottom' if (current_page?(root_path) || action_name == 'upload_photo') %>">
     <%= yield %>

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "manage" => "pages#manage"
   get "profile" => "pages#profile"
 
+  resources :attachments, only: [:destroy]
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   scope module: "users" do

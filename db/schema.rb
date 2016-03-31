@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20160328133009) do
     t.string   "provider"
     t.string   "name"
     t.string   "image"
-    t.string   "cover"
     t.string   "contact"
     t.string   "email",              default: "", null: false
     t.string   "encrypted_password", default: "", null: false

@@ -3,19 +3,35 @@
   請提供幾張照片
 </h2>
 
-<div class="hidden">
-  <%= form_tag update_attachment_post_path(post_id: @post.id), multipart: true, id: "upload_form" do %>
-    <%= file_field_tag "file[]", multiple: true %>
-    <%= semantic_icon('remove deletePhoto') %>
-    <%= submit_tag %>
-  <% end %>
+<div class="center">
+  <h3 id="upload_zone" class="ui icon header">
+    <i class="icon bordered huge plus black"></i>
+    <div class="content">
+      選擇圖片
+    </div>
+  </h3>
+  <!-- The file input field used as target for the file upload widget -->      
 </div>
 
-<div class="center">  
-  <!-- <h3 class="ui center aligned segment main-bottom-btn" id="upload_zone">輕按選擇圖片</h3> -->
-  <div class="ui stackable four column grid" id="photoPreviewBlock"></div>
-  <button class="ui basic large button hidden submit-buttom" id="upload_button">確定上傳</button>
-</div>
+<style type="text/css">
+  canvas {
+    width: 100%;
+  }
+</style>
+<input class="hidden" id="fileupload" type="file" name="files[]" multiple="">
+
+<div id="files" class="files ui stackable grid container center"></div>
+
+<% form_tag update_attachment_post_path, multipart: true, id: "upload_form" do %>
+  <%= file_field_tag "file[]", multiple: true, class: 'hidden' %>
+  <%#= semantic_icon('remove deletePhoto') %>
+  <div class="center">  
+    <!-- <h3 class="ui center aligned segment main-bottom-btn" id="upload_zone">輕按選擇圖片</h3> -->
+    <div class="ui stackable four column grid" id="photoPreviewBlock"></div>
+    <!-- <button class="ui basic large button hidden submit-buttom" id="upload_button">確定上傳</button> -->
+    <%= button_tag "開始上傳", type: "submit", class: "ui button yellow hidden", id: "upload_button" %>
+  </div>
+<% end %>
 
 <% if @post.attachments_count.present? && @post.attachments_count > 0 %>
   <h3><%= "已上傳圖片 #{@post.attachments_count} 張" %></h3>
@@ -28,58 +44,122 @@
   <% end %>
   </div>
   <div class="center">
-    <%= link_to preview_post_path(@post), class: "ui basic green button submit-buttom" do %>
-      <i class="icon plus"></i>
-      上傳更多圖片
+    <%= link_to preview_post_path(@post), class: "ui green button submit-buttom" do %>
+      下一步
     <% end %>
   </div>
 <% end %>
 
-<%= content_for :footer do %>
-  <% if @post.attachments_count.zero? %>
-    <%= render_main_btn("選擇圖片","#",id:"upload_zone") %>
-  <% else %>
-    <%= render_main_btn("上傳更多圖片","#",id:"upload_zone") %>
-  <% end %>
-<% end %>
-
 <%= content_for :custom_js do %>
+  <%= javascript_include_tag 'jQueryFileUpload/load-image.all.min', 'data-turbolinks-track' => true %>
+  <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <%= javascript_include_tag 'jQueryFileUpload/jquery.iframe-transport', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jQueryFileUpload/jquery.fileupload', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jQueryFileUpload/jquery.fileupload-process', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jQueryFileUpload/jquery.fileupload-image', 'data-turbolinks-track' => true %>
   <script type="text/javascript">
-    $("#upload_zone").click(function(){
-      $('input[type="file"][name="file[]"]').click();
-    });
-    $("#upload_button").click(function(){
-      $('#upload_zone').addClass('loading');
-      $(this).addClass('hidden');
-      $('#upload_form').submit();
-    });
-    $('input[type="file"][name="file[]"]').change(function(){
-      $('#photoPreviewBlock').html('');
-      var files = $(this).prop('files')
-      for (var i=0; i<files.length; i++) { readURL(files[i]); }
-      $('#upload_button').text("上傳 "+files.length+" 張圖片")  
-      $('#upload_button').removeClass('hidden');
-      //$('#upload_zone').css('color','#aaa');
-      $('#upload_zone').html('重新選擇圖片');
-    });
-    function readURL(file) {
-      if (file) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            //$('.photoPreview').css('background', 'url(' + e.target.result + ')');
-            var img = $('<div>', {
-              html: $('<img />', { 
-              class: 'photoPreview ui image center',
-                src: e.target.result,
-              }),
-              class: 'column'
+    $('#upload_zone').click(function(){
+      $('#fileupload').click()
+    })
+
+  </script>
+  <script type="text/javascript">
+    
+/*jslint unparam: true, regexp: true */
+/*global window, $ */
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = "<%= update_attachment_post_path %>",
+        uploadButton = $('<button/>')
+            .addClass('btn btn-primary')
+            .prop('disabled', true)
+            .text('Processing...')
+            .on('click', function () {
+                var $this = $(this),
+                    data = $this.data();
+                $this
+                    .off('click')
+                    .text('Abort')
+                    .on('click', function () {
+                        $this.remove();
+                        data.abort();
+                    });
+                data.submit().always(function () {
+                    $this.remove();
+                });
             });
-            img.appendTo($('#photoPreviewBlock'));
-            $('.photoUpload, #uploadClick').hide();
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        autoUpload: false,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 999000,
+        // Enable image resizing, except for Android and Opera,
+        // which actually support image resizing, but fail to
+        // send Blob objects via XHR requests:
+        disableImageResize: /Android(?!.*Chrome)|Opera/
+            .test(window.navigator.userAgent),
+        previewMaxWidth: 300,
+        previewMaxHeight: 300,
+        previewCrop: true
+    }).on('fileuploadadd', function (e, data) {
+        data.context = $('<div class="four wide column"/>').appendTo('#files');
+        $.each(data.files, function (index, file) {
+            var node = $('<p/>');
+            if (!index) {
+                node
+                    .append(uploadButton.clone(true).data(data));
+            }
+            node.appendTo(data.context);
+        });
+    }).on('fileuploadprocessalways', function (e, data) {
+        var index = data.index,
+            file = data.files[index],
+            node = $(data.context.children()[index]);
+        if (file.preview) {
+            node
+                .prepend('<br>')
+                .prepend(file.preview)
+                .prepend('<i class="icon huge remove" style="position: absolute;right: 0px;margin-right: 0px;"></i>');
         }
-        $('.deletePhoto').show();
-        reader.readAsDataURL(file);
-      }
-    }
+        if (file.error) {
+            node
+                .append('<br>')
+                .append($('<span class="text-danger"/>').text(file.error));
+        }
+        if (index + 1 === data.files.length) {
+            data.context.find('button')
+                .text('Upload')
+                .prop('disabled', !!data.files.error);
+        }
+    }).on('fileuploaddone', function (e, data) {
+        $.each(data.result.files, function (index, file) {
+            if (file.url) {
+                console.log(data.context.children())
+                var link = $('<a>')
+                    .attr('target', '_blank')
+                    .prop('href', file.url);
+                $(data.context.children()[index])
+                    .wrap(link);
+            } else if (file.error) {
+                var error = $('<span class="text-danger"/>').text(file.error);
+                $(data.context.children()[index])
+                    .append('<br>')
+                    .append(error);
+            }
+        });
+    }).on('fileuploadfail', function (e, data) {
+        $.each(data.files, function (index) {
+            var error = $('<span class="text-danger"/>').text('File upload failed.');
+            $(data.context.children()[index])
+                .append('<br>')
+                .append(error);
+        });
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+
   </script>
 <% end %>

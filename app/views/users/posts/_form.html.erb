@@ -22,13 +22,13 @@
         <div class="eight wide column">
           <div class="field">
             <%= f.label :post_type, "Rent type" %>
-            <% if browser.platform.ios? %>
+            <% if true#browser.platform.ios? %>
               <div class="ios_dropdown_with_icon">
-                <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui fluid dropdown default" %>
+                <%= f.select :post_type, Post.post_types.keys, {}, class: "ui fluid dropdown default" %>
                 <i class="dropdown icon"></i>
               </div>
             <% else %>
-              <%= f.select :post_type, Post.post_types.keys, {include_blank: true}, class: "ui fluid selection dropdown" %>
+              <%= f.collection_select :post_type, Post.post_types, :last, :first, {include_blank: true}, class: "ui fluid selection dropdown" %>
             <% end %>
           </div>
         </div>
@@ -43,9 +43,9 @@
         <div class="six wide column">
           <div class="field">
             <%= f.label :city, "City" %>
-            <% if browser.platform.ios? %>
+            <% if true#browser.platform.ios? %>
               <div class="ios_dropdown_with_icon">
-                <%= f.collection_select :city, I18n.t('cities'), :first, :last, {include_blank: "台北市"}, class: "ui dropdown default" %>
+                <%= f.collection_select :city, I18n.t('cities'), :first, :last, {default: "台北市"}, class: "ui dropdown default" %>
                 <i class="dropdown icon"></i>
               </div>
             <% else %>
@@ -63,46 +63,29 @@
     </div>
   </div>
 
-  
-  
       <!-- <div class="ui embed" data-url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.3228017997767!2d121.53782731486504!3d25.0570459839616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDAzJzI1LjQiTiAxMjHCsDMyJzI0LjEiRQ!5e0!3m2!1szh-TW!2stw!4v1457601553949"></div> -->
-    
-  <%= f.submit "Continue", class: "ui button yellow submit-buttom fixed-button hidden" %>
+  <div class="center">
+    <%= link_to "清除重填", "#", id:"reset-btn", class:"ui mini button basic black" %>
+    <%= f.submit "下一步", class: "ui button green submit-buttom" %>
+  </div>
   
 <% end %>
 
 
-<%= content_for :footer do %>
-  <% unless @post.new_record? %>
-    <div class="center" style="bottom: 60px;position: relative;">
-      <%= link_to "放棄草稿", "#", id:"reset-btn", class:"ui mini button basic black" %>
-    </div>
-  <% end %>
-  <%= render_main_btn("下一步", "#", onclick:'$("form input.submit-buttom").click()') %>
-<% end %>
+
 
 <%= content_for :custom_js do %>
   <script type="text/javascript">
     $("form textarea, form input, form select").change(function(){
       $.ajax({
           type      : 'POST',
-          <% if @post.new_record? %>
-            data      : { "post": {
-              "price": $('input[name="post[price]"]').val(),
-              "description": $('textarea[name="post[description]"]').val(),
-              "post_type": $('select[name="post[post_type]"]').val(),
-              "city": $('select[name="post[city]"]').val(),
-              "address": $('input[name="post[address]"]').val()
-            } }, // our data object
-          <% else %>
-            data      : { "post": {
-              "price": $('input[name="post[price]"]').val(),
-              "description": $('textarea[name="post[description]"]').val(),
-              "post_type": $('select[name="post[post_type]"]').val(),
-              "city": $('select[name="post[city]"]').val(),
-              "address": $('input[name="post[address]"]').val()
-            }, _method: 'put' }, // our data object
-          <% end %>
+          data      : { "post": {
+            "price": $('input[name="post[price]"]').val(),
+            "description": $('textarea[name="post[description]"]').val(),
+            "post_type": $('select[name="post[post_type]"]').val(),
+            "city": $('select[name="post[city]"]').val(),
+            "address": $('input[name="post[address]"]').val()
+          }, _method: 'put' }, // our data object
           url       : $('form').attr('action'), // the url where we want to POST
           dataType  : 'json', // what type of data do we expect back from the server
           encode    : true
@@ -111,13 +94,16 @@
             .done(function(data) {
 
               // log data to the console so we can see
-              console.log(data); 
+              console.log(data);
 
               // here we will handle errors and validation messages
             });
     })
     $("#reset-btn").click(function(){
       $('form').form('clear')
+      //$('form').form('set value', 'post[post_type]', 'renting')
+      //('form').form('set value', 'post[city]', 'Taipei')
+      $('form div.default.text').removeClass('default')
     })
     $(document).ready(function() {
       $('.ui.form')
@@ -126,6 +112,7 @@
           fields: {
             post_price     : ['empty','integer'],
             post_post_type   : 'empty',
+            post_city   : 'empty',
             post_description : 'empty',
             post_address : 'empty'
           }

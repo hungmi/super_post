@@ -20,6 +20,6 @@ class User < ActiveRecord::Base
   end
 
   def has_draft?
-    return self.posts.hidden.present?
+    return self.posts.draft.present?
   end
 end

@@ -1,16 +1,9 @@
-<% if session[:remind] %>
 <%= content_for :outside do %>
-  <%= render "users/partials/remind_for_draft" %>
-<% end %>
+  <%= render "users/partials/remind_for_draft" if current_user.has_draft? %>
 <% end %>
 
 <div id="home">
   <div class="ui grid">
-    <% if params[:q] && params[:q][:city_or_description_or_address_cont_any].present? && params[:q][:city_or_description_or_address_cont_any].is_a?(Array) %>
-      <div class="row">
-        <span class="center">為您找到 <%= @posts.size %> 間與<%= params[:q][:city_or_description_or_address_cont_any].map{|s| "「"+s+"」"}.join(" 或 ") %>相關的房源</span>
-      </div>
-    <% end %>
     <% @posts.each do |post| %>
       <div class="row">
         <div class="column no_horizontal_paddings">

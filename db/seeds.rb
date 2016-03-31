@@ -15,6 +15,6 @@ for i in 1..5 do
     contact: zh_lorem_words(rand(3..7))
     )
   for j in 1..3 do
-    @user.posts.create(city: I18n.t('cities').values[rand(0..20)], address: zh_lorem_words(rand(15..20)), price: rand(43..189)*100, description: zh_lorem_paragraphs(1), post_type: rand(0..2), state: rand(0..1))
+    @user.posts.create(city: I18n.t('cities').values[rand(0..20)], address: zh_lorem_words(rand(15..20)), price: rand(43..189)*100, description: zh_lorem_paragraphs(1), post_type: rand(0..2), state: rand(0..2))
   end
 end

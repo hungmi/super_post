@@ -45,7 +45,7 @@
             <%= f.label :city, "城市" %>
             <% if true#browser.platform.ios? %>
               <div class="ios_dropdown_with_icon">
-                <%= f.collection_select :city, I18n.t('cities'), :first, :last, {default: "台北市"}, class: "ui dropdown default" %>
+                <%= f.collection_select :city, I18n.t('cities'), :last, :last, {default: "台北市"}, class: "ui dropdown default" %>
                 <i class="dropdown icon"></i>
               </div>
             <% else %>

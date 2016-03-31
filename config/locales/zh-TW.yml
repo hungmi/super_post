@@ -1,5 +1,10 @@
 zh-TW:
   post_type:
-    renting: 租
-    replacement: 頂
-    matching: 徵
+    short:
+      renting: 租
+      replacement: 頂
+      matching: 徵
+    long:
+      renting: 出租
+      replacement: 頂讓
+      matching: 徵室友

@@ -2,11 +2,11 @@
 
   <div class="content">
     <div class="right floated meta"><%= time_since(post.updated_at) %></div>
-    <div class="header address"><%= "#{post.city}#{post.address}" %></div>
+    <div class="header address"><%= post.full_address %></div>
   </div>
 
   <div class="img-price-container">
-    <span class="post-type-tag"><%= post.i18n_type %></span>
+    <span class="post-type-tag"><%= post.i18n_short_type %></span>
     <div class="image owl-carousel">
       <% if post.attachments_count.zero? %>
         <% for i in 1..5 do %>
@@ -18,7 +18,7 @@
         <% end %>
       <% end %>
     </div>
-    <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) %></span>
+    <span class="price-tag"><%= number_to_currency(post.price, unit: "NT$", precision: 0) || "尚未定價" %></span>
   </div>
 
   <div class="content">

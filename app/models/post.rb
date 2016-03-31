@@ -32,7 +32,19 @@ class Post < ActiveRecord::Base
     self.valid? && self.attachments_count > 0
   end
 
-  def i18n_type
-    I18n.t("post_type.#{self.post_type}")
+  def i18n_short_type # for _post 用
+    I18n.t("post_type.short.#{self.post_type}")
+  end
+
+  def self.i18n_types # for select 用
+    I18n.t("post_type.long")
+  end
+
+  def full_address
+    if self.city.blank? && self.address.blank?
+      "尚未輸入地址"
+    else
+      "#{self.city}#{self.address}"
+    end
   end
 end

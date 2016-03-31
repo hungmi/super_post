@@ -76,9 +76,9 @@ h2.ui.header {
   //position: relative;
   max-width: 723px !important;
   //display: inline-block;
-  // &.large-margin-bottom {
-  //   margin-bottom: 110px;
-  // }
+  &.large-margin-bottom {
+    margin-bottom: 52px;
+  }
 }
 
 .action_wrapper {
@@ -100,7 +100,7 @@ h2.ui.header {
   &:hover {
     background-color: #FFD041;  
   }
-  position: absolute;
+  position: fixed;
   margin-bottom: 10px;
   bottom: 0px;//57px;
   left: 0px;

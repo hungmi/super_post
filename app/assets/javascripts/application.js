@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require semantic-ui
-//= require turbolinks
 
   $(document).ready(function(){
     $('.ui.embed').embed();

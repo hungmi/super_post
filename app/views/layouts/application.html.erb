@@ -24,7 +24,7 @@
       <i class="big home icon"></i>
       首頁
     </a>
-    <a class="item <%= render_active(action_name == 'profile' || current_page?(controller:'devise/sessions', action:'new')) %>" href="<%= user_signed_in? ? profile_path : new_user_session_path %>" data-no-turbolink=true>
+    <a class="item <%= render_active(action_name == 'profile' || current_page?(controller:'devise/sessions', action:'new')) %>" href="<%= user_signed_in? ? profile_path : new_user_session_path %>">
       <i class="big user icon"></i>
       帳號管理
     </a>
@@ -35,7 +35,7 @@
       <a class="item" style="position: absolute; height: 52.1406px;">
         <i class="sidebar icon"></i>
       </a>
-      <%= link_to root_path, class: "logo item center", id: "logo-img-link", "data-no-turbolink":true do %>
+      <%= link_to root_path, class: "logo item center", id: "logo-img-link" do %>
         <%= image_tag 'https://s3.amazonaws.com/superpostimages/uploads/default/logo-f.png', id: "logo-img" %>
       <% end %>
     </div>

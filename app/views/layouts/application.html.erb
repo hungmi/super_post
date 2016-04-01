@@ -14,7 +14,10 @@
 
     ga('create', '<%= ENV["google_analytics_key"] %>', 'auto');
     ga('send', 'pageview');
-
+    
+    $(document).on('page:change', function() {
+      ga('send', 'pageview', window.location.pathname);
+    });
   </script>
 </head>
 <body class="snow">

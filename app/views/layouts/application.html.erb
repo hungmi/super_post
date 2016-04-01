@@ -14,17 +14,13 @@
 
     ga('create', '<%= ENV["google_analytics_key"] %>', 'auto');
     ga('send', 'pageview');
-    
-    $(document).on('page:change', function() {
-      ga('send', 'pageview', window.location.pathname);
-    });
   </script>
 </head>
 <body class="snow">
   
 
   <div class="ui left vertical inverted sidebar labeled icon menu">
-    <a class="item<%= ' active' if action_name == 'posts' %>" href="/" data-no-turbolink=true>
+    <a class="item<%= ' active' if action_name == 'posts' %>" href="/">
       <i class="big home icon"></i>
       首頁
     </a>

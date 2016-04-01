@@ -62,7 +62,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= yield :custom_js %>
   <script type="text/javascript">
-    $('i.sidebar.icon').click(function(){
+    $('i.sidebar.icon').parent('a.item').click(function(){
       $('.ui.sidebar')
         .sidebar('toggle')
       ;
